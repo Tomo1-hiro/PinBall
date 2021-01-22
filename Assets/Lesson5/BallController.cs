@@ -13,6 +13,7 @@ public class BallController : MonoBehaviour
     private GameObject gameoverText;
     //スコアを表示するテキスト
     private GameObject scoreText;
+    public int score;
     void Start()
         
     {
@@ -31,19 +32,25 @@ public class BallController : MonoBehaviour
             //GameoverTextにゲームオーバを表示
             this.gameoverText.GetComponent<Text>().text = "Game Over";
         }
-        if (tag == "SmallStarTag")
-        {
-            this.scoreText.GetComponent<Text>().text = "5";
-        }
-        else if (tag == "LargeStarTag")
-        {
-            this.scoreText.GetComponent<Text>().text = "10";
-        }
-        else if (tag == "SmallCloudTag" || tag == "LargeCloudTag")
-        {
-            this.scoreText.GetComponent<Text>().text = "20";
-        }
-       
     }
-    
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "SmallStarTag")
+        {
+            score += 5;
+        }
+        else if (other.gameObject.tag == "LargeCloudTag")
+        {
+            score += 10;
+        }
+        else if (other.gameObject.tag == "LargeStarTag")
+        {
+            score += 15;
+        }
+        else if(other.gameObject.tag == "SmallCloudTag")
+        {
+            score += 20;
+        }
+        this.scoreText.GetComponent<Text>().text = score + "Point";
+    }
 }
